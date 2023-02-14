@@ -135,11 +135,11 @@ void loop() {
 void myNoteOn(byte channel, byte note, byte velocity) {
 
   //load up the new note into our note set
-  set.addNote(note, velocity);
+  set.note_on(note, velocity);
 
   //ask the note set which note to play next
   //(which depends on the setting for the priority)
-  NoteInfo note_to_play = set.getNextNote();
+  NoteInfo note_to_play = set.get_next_note();
 
 
   //if an empty note is returned, we shouldn't play it!
@@ -171,13 +171,13 @@ void myNoteOn(byte channel, byte note, byte velocity) {
 
 void myNoteOff(byte channel, byte note, byte velocity) {
   //make sure the note gets removed from the note set
-  set.removeNote(note);
+  set.note_off(note);
 
   //When playing a keyboard it is common to hold a key while pressing then releasing
   //another key. This means that note-off messages will happen while keys are still being pressed.
   //This could mean that a note off message indicates that we need to trigger playing a new (old) note.
   //check if that's the case
-  NoteInfo note_to_play = set.getNextNote();
+  NoteInfo note_to_play = set.get_next_note();
   if (note_to_play.note != EMPTY_NOTE) {
     //Serial.println(String("MIDI note:  ") + note_to_play.note + String(" velocity ") + note_to_play.velocity);
 
